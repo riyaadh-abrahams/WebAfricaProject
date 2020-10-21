@@ -16,6 +16,12 @@ namespace WebAfricaProject.Entities
             EmployeeId = employeeId;
         }
 
+        public ProjectEmployee(Project project, Employee employee)
+        {
+            Project = project;
+            Employee = employee;
+        }
+
         public int? ProjectId { get; set; }
 
         [Required]

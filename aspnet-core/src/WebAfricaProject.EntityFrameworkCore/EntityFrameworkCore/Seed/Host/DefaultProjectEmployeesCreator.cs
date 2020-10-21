@@ -18,14 +18,14 @@ namespace WebAfricaProject.EntityFrameworkCore.Seed.Host
 
             return new List<ProjectEmployee>
             {
-                new ProjectEmployee(_context.Project.FirstOrDefault(x => x.Name == "Arsenal Playground").Id,_context.Employee.FirstOrDefault(x => x.Name == "Dani").Id),
-                new ProjectEmployee(_context.Project.FirstOrDefault(x => x.Name == "Arsenal Playground").Id,_context.Employee.FirstOrDefault(x => x.Name == "Alexis").Id),
-                new ProjectEmployee(_context.Project.FirstOrDefault(x => x.Name == "Arsenal Playground").Id,_context.Employee.FirstOrDefault(x => x.Name == "Mesut").Id),
-                new ProjectEmployee(_context.Project.FirstOrDefault(x => x.Name == "Aston Villa Training Facility").Id,_context.Employee.FirstOrDefault(x => x.Name == "Dani").Id),
-                new ProjectEmployee(_context.Project.FirstOrDefault(x => x.Name == "Aston Villa Training Facility").Id,_context.Employee.FirstOrDefault(x => x.Name == "Anthony").Id),
-                new ProjectEmployee(_context.Project.FirstOrDefault(x => x.Name == "Manchester Foundation").Id,_context.Employee.FirstOrDefault(x => x.Name == "Anthony").Id),
-                new ProjectEmployee(_context.Project.FirstOrDefault(x => x.Name == "Manchester Foundation").Id,_context.Employee.FirstOrDefault(x => x.Name == "Romelu").Id),
-                new ProjectEmployee(_context.Project.FirstOrDefault(x => x.Name == "Manchester Foundation").Id,_context.Employee.FirstOrDefault(x => x.Name == "Roy").Id)
+                new ProjectEmployee(_context.Project.FirstOrDefault(x => x.Name == "Arsenal Playground"),_context.Employee.FirstOrDefault(x => x.Name == "Dani")),
+                new ProjectEmployee(_context.Project.FirstOrDefault(x => x.Name == "Arsenal Playground"),_context.Employee.FirstOrDefault(x => x.Name == "Alexis")),
+                new ProjectEmployee(_context.Project.FirstOrDefault(x => x.Name == "Arsenal Playground"),_context.Employee.FirstOrDefault(x => x.Name == "Mesut")),
+                new ProjectEmployee(_context.Project.FirstOrDefault(x => x.Name == "Aston Villa Training Facility"),_context.Employee.FirstOrDefault(x => x.Name == "Dani")),
+                new ProjectEmployee(_context.Project.FirstOrDefault(x => x.Name == "Aston Villa Training Facility"),_context.Employee.FirstOrDefault(x => x.Name == "Anthony")),
+                new ProjectEmployee(_context.Project.FirstOrDefault(x => x.Name == "Manchester Foundation"),_context.Employee.FirstOrDefault(x => x.Name == "Anthony")),
+                new ProjectEmployee(_context.Project.FirstOrDefault(x => x.Name == "Manchester Foundation"),_context.Employee.FirstOrDefault(x => x.Name == "Romelu")),
+                new ProjectEmployee(_context.Project.FirstOrDefault(x => x.Name == "Manchester Foundation"),_context.Employee.FirstOrDefault(x => x.Name == "Roy"))
             };
         }
 
@@ -49,7 +49,7 @@ namespace WebAfricaProject.EntityFrameworkCore.Seed.Host
 
         private void AddProjectEmployeeIfNotExists(ProjectEmployee projectEmployee)
         {
-            if (_context.ProjectEmployee.IgnoreQueryFilters().Any(l => l.ProjectId == projectEmployee.ProjectId && l.EmployeeId == projectEmployee.EmployeeId))
+            if (_context.ProjectEmployee.IgnoreQueryFilters().Any(l => l.Project.Id == projectEmployee.Project.Id && l.Employee.Id == projectEmployee.Employee.Id))
             {
                 return;
             }
