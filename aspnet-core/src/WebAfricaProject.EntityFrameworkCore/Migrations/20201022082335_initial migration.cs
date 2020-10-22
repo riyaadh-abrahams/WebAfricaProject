@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebAfricaProject.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class initialmigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -938,13 +938,14 @@ namespace WebAfricaProject.Migrations
                 name: "EmployeeSkill",
                 columns: table => new
                 {
-                    EmployeeId = table.Column<int>(nullable: false),
-                    SkillId = table.Column<int>(nullable: false),
                     Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EmployeeId = table.Column<int>(nullable: false),
+                    SkillId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EmployeeSkill", x => new { x.EmployeeId, x.SkillId });
+                    table.PrimaryKey("PK_EmployeeSkill", x => x.Id);
                     table.ForeignKey(
                         name: "FK_EmployeeSkill_Skill_EmployeeId",
                         column: x => x.EmployeeId,
@@ -963,13 +964,14 @@ namespace WebAfricaProject.Migrations
                 name: "ProjectEmployee",
                 columns: table => new
                 {
-                    ProjectId = table.Column<int>(nullable: false),
-                    EmployeeId = table.Column<int>(nullable: false),
                     Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProjectId = table.Column<int>(nullable: false),
+                    EmployeeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProjectEmployee", x => new { x.ProjectId, x.EmployeeId });
+                    table.PrimaryKey("PK_ProjectEmployee", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ProjectEmployee_Project_EmployeeId",
                         column: x => x.EmployeeId,
@@ -1335,6 +1337,11 @@ namespace WebAfricaProject.Migrations
                 column: "JobTitleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EmployeeSkill_EmployeeId",
+                table: "EmployeeSkill",
+                column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_EmployeeSkill_SkillId",
                 table: "EmployeeSkill",
                 column: "SkillId");
@@ -1343,6 +1350,11 @@ namespace WebAfricaProject.Migrations
                 name: "IX_ProjectEmployee_EmployeeId",
                 table: "ProjectEmployee",
                 column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProjectEmployee_ProjectId",
+                table: "ProjectEmployee",
+                column: "ProjectId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

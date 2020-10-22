@@ -49,7 +49,7 @@ namespace WebAfricaProject.EntityFrameworkCore.Seed.Host
 
         private void AddProjectEmployeeIfNotExists(ProjectEmployee projectEmployee)
         {
-            if (_context.ProjectEmployee.IgnoreQueryFilters().Any(l => l.Project.Id == projectEmployee.Project.Id && l.Employee.Id == projectEmployee.Employee.Id))
+            if (_context.ProjectEmployee.IgnoreQueryFilters().Any(l => l.ProjectId == projectEmployee.Project.Id && l.EmployeeId == projectEmployee.Employee.Id))
             {
                 return;
             }

@@ -43,8 +43,8 @@ namespace WebAfricaProject.Entities
         public int? JobTitleId { get; set; }
         public JobTitle JobTitle { get; set; }
 
-        public ICollection<ProjectEmployee> ProjectEmployees { get; set; }
-        public ICollection<EmployeeSkill> EmployeeSkills { get; set; }
+        public List<Project> Projects { get; set; }
+        public List<Skill> Skills { get; set; }
     }
 
     [AutoMap(typeof(Employee))]

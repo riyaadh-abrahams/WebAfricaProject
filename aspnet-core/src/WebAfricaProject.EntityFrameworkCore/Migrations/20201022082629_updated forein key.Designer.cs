@@ -10,8 +10,8 @@ using WebAfricaProject.EntityFrameworkCore;
 namespace WebAfricaProject.Migrations
 {
     [DbContext(typeof(WebAfricaProjectDbContext))]
-    [Migration("20201021161844_Initial Migration")]
-    partial class InitialMigration
+    [Migration("20201022082629_updated forein key")]
+    partial class updatedforeinkey
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1542,16 +1542,22 @@ namespace WebAfricaProject.Migrations
 
             modelBuilder.Entity("WebAfricaProject.Entities.EmployeeSkill", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<int?>("EmployeeId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("SkillId")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
+                    b.HasKey("Id");
 
-                    b.HasKey("EmployeeId", "SkillId");
+                    b.HasIndex("EmployeeId");
 
                     b.HasIndex("SkillId");
 
@@ -1601,18 +1607,24 @@ namespace WebAfricaProject.Migrations
 
             modelBuilder.Entity("WebAfricaProject.Entities.ProjectEmployee", b =>
                 {
-                    b.Property<int?>("ProjectId")
-                        .HasColumnType("int");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("EmployeeId")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int>("Id")
+                    b.Property<int?>("ProjectId")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.HasKey("ProjectId", "EmployeeId");
+                    b.HasKey("Id");
 
                     b.HasIndex("EmployeeId");
+
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("ProjectEmployee");
                 });
@@ -1918,13 +1930,13 @@ namespace WebAfricaProject.Migrations
 
             modelBuilder.Entity("WebAfricaProject.Entities.ProjectEmployee", b =>
                 {
-                    b.HasOne("WebAfricaProject.Entities.Project", "Project")
+                    b.HasOne("WebAfricaProject.Entities.Employee", "Employee")
                         .WithMany("ProjectEmployees")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebAfricaProject.Entities.Employee", "Employee")
+                    b.HasOne("WebAfricaProject.Entities.Project", "Project")
                         .WithMany("ProjectEmployees")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -22,30 +22,30 @@ namespace WebAfricaProject.EntityFrameworkCore
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<EmployeeSkill>()
-                .HasKey(x => new { x.EmployeeId, x.SkillId });
+                .HasKey(x => new { x.Id });
 
             modelBuilder.Entity<EmployeeSkill>()
                 .HasOne(x => x.Employee)
                 .WithMany(y => y.EmployeeSkills)
-                .HasForeignKey(y => y.SkillId);
+                .HasForeignKey(y => y.EmployeeId);
 
             modelBuilder.Entity<EmployeeSkill>()
                 .HasOne(x => x.Skill)
                 .WithMany(y => y.EmployeeSkills)
-                .HasForeignKey(y => y.EmployeeId);
+                .HasForeignKey(y => y.SkillId);
 
             modelBuilder.Entity<ProjectEmployee>()
-                .HasKey(x => new { x.ProjectId, x.EmployeeId });
+                .HasKey(x => new { x.Id });
 
             modelBuilder.Entity<ProjectEmployee>()
                 .HasOne(x => x.Project)
                 .WithMany(y => y.ProjectEmployees)
-                .HasForeignKey(y => y.EmployeeId);
+                .HasForeignKey(y => y.ProjectId);
 
             modelBuilder.Entity<ProjectEmployee>()
                 .HasOne(x => x.Employee)
                 .WithMany(y => y.ProjectEmployees)
-                .HasForeignKey(y => y.ProjectId);
+                .HasForeignKey(y => y.EmployeeId);
         }
 
         public WebAfricaProjectDbContext(DbContextOptions<WebAfricaProjectDbContext> options)
