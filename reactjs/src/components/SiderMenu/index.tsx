@@ -5,7 +5,7 @@ import * as React from 'react';
 import { Avatar, Col, Icon, Layout, Menu } from 'antd';
 import { L, isGranted } from '../../lib/abpUtility';
 
-import AbpLogo from '../../images/abp-logo-long.png';
+import AbpLogo from '../../images/webafrica_logo.png';
 import { appRouters } from '../../components/Router/router.config';
 
 const { Sider } = Layout;

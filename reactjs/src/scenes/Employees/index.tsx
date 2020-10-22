@@ -1,42 +1,41 @@
+import './index.less';
 import * as React from 'react';
 
-import { Button, Card, Col, Dropdown, Input, Menu, Modal, Row, Table } from 'antd';
+import { Button, Card, Col, Dropdown, Input, Menu, Modal, Row, Table, /* Tag */ } from 'antd';
 import { inject, observer } from 'mobx-react';
 
 import AppComponentBase from '../../components/AppComponentBase';
-import CreateOrUpdateRole from './components/createOrUpdateRole';
+import CreateOrUpdateEmployee from './components/createOrUpdateEmployee';
 import { EntityDto } from '../../services/dto/entityDto';
-import { FormComponentProps } from 'antd/lib/form';
 import { L } from '../../lib/abpUtility';
-import RoleStore from '../../stores/roleStore';
 import Stores from '../../stores/storeIdentifier';
+import EmployeeStore from '../../stores/employeeStore';
 
-export interface IRoleProps extends FormComponentProps {
-  roleStore: RoleStore;
+export interface IEmployeeProps {
+  employeeStore: EmployeeStore;
 }
 
-export interface IRoleState {
+export interface IEmployeeState {
   modalVisible: boolean;
   maxResultCount: number;
   skipCount: number;
-  roleId: number;
+  employeeId: number;
   filter: string;
 }
 
 const confirm = Modal.confirm;
 const Search = Input.Search;
 
-@inject(Stores.RoleStore)
 @inject(Stores.EmployeeStore)
 @observer
-class Role extends AppComponentBase<IRoleProps, IRoleState> {
+class Employee extends AppComponentBase<IEmployeeProps, IEmployeeState> {
   formRef: any;
 
   state = {
     modalVisible: false,
     maxResultCount: 10,
     skipCount: 0,
-    roleId: 0,
+    employeeId: 0,
     filter: '',
   };
 
@@ -45,7 +44,7 @@ class Role extends AppComponentBase<IRoleProps, IRoleState> {
   }
 
   async getAll() {
-    await this.props.roleStore.getAll({ maxResultCount: this.state.maxResultCount, skipCount: this.state.skipCount, keyword: this.state.filter });
+    await this.props.employeeStore.getAll({ maxResultCount: this.state.maxResultCount, skipCount: this.state.skipCount, keyword: this.state.filter });
   }
 
   handleTableChange = (pagination: any) => {
@@ -60,20 +59,21 @@ class Role extends AppComponentBase<IRoleProps, IRoleState> {
 
   async createOrUpdateModalOpen(entityDto: EntityDto) {
     if (entityDto.id === 0) {
-      this.props.roleStore.createRole();
-      await this.props.roleStore.getAllPermissions();
+      this.props.employeeStore.createEmployee();
     } else {
-      await this.props.roleStore.getRoleForEdit(entityDto);
-      await this.props.roleStore.getAllPermissions();
+      await this.props.employeeStore.get(entityDto);
     }
 
-    this.setState({ roleId: entityDto.id });
+    this.setState({ employeeId: entityDto.id });
     this.Modal();
 
-    this.formRef.props.form.setFieldsValue({
-      ...this.props.roleStore.roleEdit.role,
-      grantedPermissions: this.props.roleStore.roleEdit.grantedPermissionNames,
-    });
+    if (entityDto.id !== 0) {
+      this.formRef.props.form.setFieldsValue({
+        ...this.props.employeeStore.employeeModel,
+      });
+    } else {
+      this.formRef.props.form.resetFields();
+    }
   }
 
   delete(input: EntityDto) {
@@ -81,7 +81,7 @@ class Role extends AppComponentBase<IRoleProps, IRoleState> {
     confirm({
       title: 'Do you Want to delete these items?',
       onOk() {
-        self.props.roleStore.delete(input);
+        self.props.employeeStore.delete(input);
       },
       onCancel() {},
     });
@@ -93,10 +93,10 @@ class Role extends AppComponentBase<IRoleProps, IRoleState> {
       if (err) {
         return;
       } else {
-        if (this.state.roleId === 0) {
-          await this.props.roleStore.create(values);
+        if (this.state.employeeId === 0) {
+          await this.props.employeeStore.create(values);
         } else {
-          await this.props.roleStore.update({ id: this.state.roleId, ...values });
+          await this.props.employeeStore.update({ id: this.state.employeeId, ...values });
         }
       }
 
@@ -115,10 +115,18 @@ class Role extends AppComponentBase<IRoleProps, IRoleState> {
   };
 
   public render() {
-    const { allPermissions, roles } = this.props.roleStore;
+    const { employees } = this.props.employeeStore;
     const columns = [
-      { title: L('RoleName'), dataIndex: 'name', key: 'name', width: 150, render: (text: string) => <div>{text}</div> },
-      { title: L('DisplayName'), dataIndex: 'displayName', key: 'displayName', width: 150, render: (text: string) => <div>{text}</div> },
+      { title: L('Name'), dataIndex: 'name', key: 'name', width: 150, render: (text: string) => <div>{text}</div> },
+      { title: L('Surname'), dataIndex: 'surname', key: 'surname', width: 150, render: (text: string) => <div>{text}</div> },
+      { title: L('Job Title'), dataIndex: 'jobTitleId', key: 'jobTitleId', width: 150, render: (text: string) => <div>{text}</div> },
+      /* {
+        title: L('Job'),
+        dataIndex: 'jobTitleId',
+        key: 'jobTitleId',
+        width: 150,
+        render: (text: boolean) => (text === true ? <Tag color="#2db7f5">{L('Yes')}</Tag> : <Tag color="red">{L('No')}</Tag>),
+      }, */
       {
         title: L('Actions'),
         width: 150,
@@ -154,7 +162,7 @@ class Role extends AppComponentBase<IRoleProps, IRoleState> {
             xl={{ span: 2, offset: 0 }}
             xxl={{ span: 2, offset: 0 }}
           >
-            <h2>{L('Roles')}</h2>
+            <h2>{L('Employees')}</h2>
           </Col>
           <Col
             xs={{ span: 14, offset: 0 }}
@@ -164,13 +172,15 @@ class Role extends AppComponentBase<IRoleProps, IRoleState> {
             xl={{ span: 1, offset: 21 }}
             xxl={{ span: 1, offset: 21 }}
           >
-            <Button type="primary" shape="circle" icon="plus" onClick={() => this.createOrUpdateModalOpen({ id: 0 })} />
+
           </Col>
+          
         </Row>
-        <Row>
+        <Row className="searchbar-button">
           <Col sm={{ span: 10, offset: 0 }}>
             <Search placeholder={this.L('Filter')} onSearch={this.handleSearch} />
           </Col>
+          <Col><Button type="primary"  icon="plus" onClick={() => this.createOrUpdateModalOpen({ id: 0 })}> {L('Add Employee')} </Button></Col>
         </Row>
         <Row style={{ marginTop: 20 }}>
           <Col
@@ -185,16 +195,15 @@ class Role extends AppComponentBase<IRoleProps, IRoleState> {
               rowKey="id"
               size={'default'}
               bordered={true}
-              pagination={{ pageSize: this.state.maxResultCount, total: roles === undefined ? 0 : roles.totalCount, defaultCurrent: 1 }}
+              pagination={{ pageSize: this.state.maxResultCount, total: employees === undefined ? 0 : employees.totalCount, defaultCurrent: 1 }}
               columns={columns}
-              loading={roles === undefined ? true : false}
-              dataSource={roles === undefined ? [] : roles.items}
+              loading={employees === undefined ? true : false}
+              dataSource={employees === undefined ? [] : employees.items}
               onChange={this.handleTableChange}
             />
           </Col>
         </Row>
-
-        <CreateOrUpdateRole
+        <CreateOrUpdateEmployee
           wrappedComponentRef={this.saveFormRef}
           visible={this.state.modalVisible}
           onCancel={() =>
@@ -202,14 +211,12 @@ class Role extends AppComponentBase<IRoleProps, IRoleState> {
               modalVisible: false,
             })
           }
-          modalType={this.state.roleId === 0 ? 'edit' : 'create'}
-          onOk={this.handleCreate}
-          permissions={allPermissions}
-          roleStore={this.props.roleStore}
+          modalType={this.state.employeeId === 0 ? 'edit' : 'create'}
+          onCreate={this.handleCreate}
         />
       </Card>
     );
   }
 }
 
-export default Role;
+export default Employee;

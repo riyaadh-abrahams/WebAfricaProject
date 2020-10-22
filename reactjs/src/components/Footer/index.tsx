@@ -5,7 +5,7 @@ import './index.less';
 const Footer = () => {
   return (
       <Col className={"footer"}>
-      Asp.Net Boilerplate - React © 2018 <a href="https://github.com/ryoldash/module-zero-core-template">Github Page</a>
+      WebAfrica Take-Home Assessment by <a href="https://cbapps.co.za">Riyaadh</a>
       </Col>
   );
 };

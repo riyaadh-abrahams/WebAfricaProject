@@ -1,11 +1,9 @@
 import * as React from 'react';
 import { Row, Col, Card, Icon } from 'antd';
 import './index.less';
-import TinyLineChartExample from './components/TinyLineChartExample';
 import BarChartExample from './components/BarChartExample';
 import PieChartExample from './components/PieChartExample';
-import LineChartExample from './components/LineChartExample';
-import ListExample from './components/ListExample';
+
 
 export class Dashboard extends React.Component<any> {
   componentDidMount() {
@@ -23,13 +21,7 @@ export class Dashboard extends React.Component<any> {
   };
 
   render() {
-    const { cardLoading, lineChartLoading, barChartLoading, pieChartLoading } = this.state;
-
-    const visitorStatisticList = [
-      { title: 'TODAY', body: '1.200 user' },
-      { title: 'YESTERDAY', body: '3.872 user' },
-      { title: 'LAST WEEK', body: '26.582 user' },
-    ];
+    const { cardLoading, barChartLoading, pieChartLoading } = this.state;
 
     return (
       <React.Fragment>
@@ -108,54 +100,6 @@ export class Dashboard extends React.Component<any> {
                 <p className={'dashboardCardName'}>New Visitors</p>
                 <label className={'dashboardCardCounter'}>1225</label>
               </Col>
-            </Card>
-          </Col>
-        </Row>
-
-        <Row>
-          <Card className={'dashboardBox'} title="Visit Statistics" loading={lineChartLoading} bordered={false}>
-            <LineChartExample />
-          </Card>
-        </Row>
-
-        <Row gutter={16}>
-          <Col
-            xs={{ offset: 1, span: 22 }}
-            sm={{ offset: 1, span: 22 }}
-            md={{ offset: 1, span: 22 }}
-            lg={{ offset: 0, span: 8 }}
-            xl={{ offset: 0, span: 8 }}
-            xxl={{ offset: 0, span: 8 }}
-          >
-            <Card className={'dashboardCardTinyLine'} loading={barChartLoading} bordered={false}>
-              <TinyLineChartExample />
-              <ListExample value={visitorStatisticList} />
-            </Card>
-          </Col>
-          <Col
-            xs={{ offset: 1, span: 22 }}
-            sm={{ offset: 1, span: 22 }}
-            md={{ offset: 1, span: 22 }}
-            lg={{ offset: 0, span: 8 }}
-            xl={{ offset: 0, span: 8 }}
-            xxl={{ offset: 0, span: 8 }}
-          >
-            <Card className={'latestSocialTrendsList'} loading={barChartLoading} bordered={false}>
-              <TinyLineChartExample />
-              <ListExample value={visitorStatisticList} />
-            </Card>
-          </Col>
-          <Col
-            xs={{ offset: 1, span: 22 }}
-            sm={{ offset: 1, span: 22 }}
-            md={{ offset: 1, span: 22 }}
-            lg={{ offset: 0, span: 8 }}
-            xl={{ offset: 0, span: 8 }}
-            xxl={{ offset: 0, span: 8 }}
-          >
-            <Card className={'answeredTickeds'} loading={barChartLoading} bordered={false}>
-              <TinyLineChartExample />
-              <ListExample value={visitorStatisticList} />
             </Card>
           </Col>
         </Row>

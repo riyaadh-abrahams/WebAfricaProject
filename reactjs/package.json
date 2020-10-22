@@ -45,7 +45,8 @@
     "@types/recharts": "^1.8.3",
     "copy-webpack-plugin": "^5.0.5",
     "ts-import-plugin": "^1.6.1",
-    "typescript": "^3.7.2"
+    "typescript": "^3.7.2",
+    "nswag": "^13.4.2"
   },
   "browserslist": {
     "production": [
