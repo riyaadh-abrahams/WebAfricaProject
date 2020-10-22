@@ -1,5 +1,6 @@
 class JobTitleModel {
-    JobTitleLabel!: string
+    jobTitleLabel!: string;
+    id!: number;
 }
 
 export default JobTitleModel

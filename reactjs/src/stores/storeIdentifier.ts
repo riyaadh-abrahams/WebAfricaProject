@@ -6,4 +6,5 @@ export default class Stores {
   static SessionStore: string = 'sessionStore';
   static AccountStore: string = 'accountStore';
   static EmployeeStore: string = "employeeStore";
+  static JobTitleStore: string = "jobTitleStore";
 }

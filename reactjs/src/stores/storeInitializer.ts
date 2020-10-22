@@ -5,6 +5,7 @@ import SessionStore from './sessionStore';
 import AuthenticationStore from './authenticationStore';
 import AccountStore from './accountStore';
 import EmployeeStore from './employeeStore';
+import JobTitleStore from './jobTitleStore';
 
 export default function initializeStores() {
   return {
@@ -15,5 +16,6 @@ export default function initializeStores() {
     sessionStore: new SessionStore(),
     accountStore: new AccountStore(),
     employeeStore: new EmployeeStore(),
+    jobTitleStore: new JobTitleStore(),
   };
 }
