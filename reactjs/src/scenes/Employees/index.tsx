@@ -1,7 +1,7 @@
 import './index.less';
 import * as React from 'react';
 
-import { Button, Card, Col, Dropdown, Input, Menu, Modal, Row, Table, /* Tag */ } from 'antd';
+import { Button, Card, Col, Dropdown, Input, Menu, Modal, Row, Table, Tag, /* Tag */ } from 'antd';
 import { inject, observer } from 'mobx-react';
 
 import AppComponentBase from '../../components/AppComponentBase';
@@ -10,9 +10,11 @@ import { EntityDto } from '../../services/dto/entityDto';
 import { L } from '../../lib/abpUtility';
 import Stores from '../../stores/storeIdentifier';
 import EmployeeStore from '../../stores/employeeStore';
+import JobTitleStore from '../../stores/jobTitleStore';
 
 export interface IEmployeeProps {
   employeeStore: EmployeeStore;
+  jobTitleStore: JobTitleStore;
 }
 
 export interface IEmployeeState {
@@ -27,6 +29,7 @@ const confirm = Modal.confirm;
 const Search = Input.Search;
 
 @inject(Stores.EmployeeStore)
+@inject(Stores.JobTitleStore)
 @observer
 class Employee extends AppComponentBase<IEmployeeProps, IEmployeeState> {
   formRef: any;
@@ -114,12 +117,28 @@ class Employee extends AppComponentBase<IEmployeeProps, IEmployeeState> {
     this.setState({ filter: value }, async () => await this.getAll());
   };
 
+  public hashCode(str: string) { 
+    var hash = 0;
+    for (var i = 0; i < str.length; i++) {
+       hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return hash;
+  } 
+
+  public intToRGB(i: number){
+      var c = (i & 0x00FFFFFF)
+          .toString(16)
+          .toUpperCase();
+
+      return "00000".substring(0, 6 - c.length) + c;
+  }
+
   public render() {
     const { employees } = this.props.employeeStore;
     const columns = [
       { title: L('Name'), dataIndex: 'name', key: 'name', width: 150, render: (text: string) => <div>{text}</div> },
       { title: L('Surname'), dataIndex: 'surname', key: 'surname', width: 150, render: (text: string) => <div>{text}</div> },
-      { title: L('Job Title'), dataIndex: 'jobTitleId', key: 'jobTitleId', width: 150, render: (text: string) => <div>{text}</div> },
+      { title: L('Job Title'), dataIndex: 'jobTitle.jobTitleLabel', key: 'obTitle.jobTitleLabel', width: 150, render: (text: string) => <Tag color="#5c6976">{text}</Tag> },
       /* {
         title: L('Job'),
         dataIndex: 'jobTitleId',
@@ -206,6 +225,7 @@ class Employee extends AppComponentBase<IEmployeeProps, IEmployeeState> {
         <CreateOrUpdateEmployee
           wrappedComponentRef={this.saveFormRef}
           visible={this.state.modalVisible}
+          jobTitleStore= {this.props.jobTitleStore}
           onCancel={() =>
             this.setState({
               modalVisible: false,

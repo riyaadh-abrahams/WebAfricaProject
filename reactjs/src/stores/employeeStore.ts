@@ -8,6 +8,7 @@ import { PagedEmployeeResultRequestDto } from '../services/employee/dto/PagedEmp
 import EmployeeModel from '../models/WebAfricaModels/EmployeeModel';
 import UpdateEmployeeInput from '../services/employee/dto/updateEmployeeInput';
 import employeeService from '../services/employee/employeeService';
+import JobTitleModel from '../models/WebAfricaModels/JobTitleModel';
 
 class EmployeeStore {
   @observable employees!: PagedResultDto<GetAllEmployeeOutput>;
@@ -24,7 +25,8 @@ class EmployeeStore {
       id: 0,
       name: '',
       surname: '',
-      jobTitleId: 0
+      jobTitleId: 0,
+      jobTitle: new JobTitleModel()
     };
   }
 

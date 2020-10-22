@@ -1,21 +1,59 @@
 import * as React from 'react';
 
-import { Form, Input, Modal } from 'antd';
+import { Form, Input, Modal, Select } from 'antd';
 
 import { FormComponentProps } from 'antd/lib/form';
 import FormItem from 'antd/lib/form/FormItem';
 import { L } from '../../../lib/abpUtility';
 import rules from './createOrUpdateEmployee.validation';
+import JobTitleStore from '../../../stores/jobTitleStore';
+import { inject } from 'mobx-react';
+import Stores from '../../../stores/storeIdentifier';
 
 export interface ICreateOrUpdateEmployeeProps extends FormComponentProps {
   visible: boolean;
   modalType: string;
+  jobTitleStore: JobTitleStore;
   onCreate: () => void;
   onCancel: () => void;
 }
 
+export interface IJobTitleProps {
+  
+}
+
+export interface IJobTitleState {
+  modalVisible: boolean;
+  maxResultCount: number;
+  skipCount: number;
+  jobTitleId: number;
+  filter: string;
+}
+
+@inject(Stores.JobTitleStore)
 class CreateOrUpdateEmployee extends React.Component<ICreateOrUpdateEmployeeProps> {
+
+  state = {
+    modalVisible: false,
+    maxResultCount: 10,
+    skipCount: 0,
+    jobTitleId: 0,
+    filter: '',
+  };
+
+
+  async componentDidMount() {
+    await this.getAll();
+  }
+
+  async getAll() {
+    await this.props.jobTitleStore.getAll({ maxResultCount: this.state.maxResultCount, skipCount: this.state.skipCount, keyword: this.state.filter });
+  }
+
+
   render() {
+    const { jobTitles } = this.props.jobTitleStore;
+    const { Option } = Select;
     const formItemLayout = {
       labelCol: {
         xs: { span: 6 },
@@ -57,6 +95,18 @@ class CreateOrUpdateEmployee extends React.Component<ICreateOrUpdateEmployeeProp
     const { getFieldDecorator } = this.props.form;
     const { visible, onCancel, onCreate } = this.props;
 
+    var jobOptions = jobTitles === undefined ? [] : jobTitles.items.map((val, index) => {
+      return (
+        <Option value={val.id}>
+          { val.jobTitleLabel }
+        </Option>
+      );
+    })
+
+    console.log(jobOptions);
+
+    
+
     return (
       <Modal visible={visible} onCancel={onCancel} onOk={onCreate} title={L('Employees')} width={550}>
         <Form>
@@ -73,7 +123,15 @@ class CreateOrUpdateEmployee extends React.Component<ICreateOrUpdateEmployeeProp
             </FormItem>
           ) : null} */}
           <FormItem label={L('Job Title')} {...tailFormItemLayout}>
-            {getFieldDecorator('jobTitleId', {rules: rules.jobTitleId})(<Input type="number"/>)}
+            {getFieldDecorator('jobTitleId', {rules: rules.jobTitleId})(
+
+            <Select style={{ width: 120 }}/*  onChange={handleChange} */>
+             {jobOptions}
+            
+          </Select>
+
+            
+            )}
           </FormItem>
 
         </Form>

@@ -34,7 +34,8 @@ namespace WebAfricaProject.Services
         protected override IQueryable<Employee> CreateFilteredQuery(PagedAndSortedResultRequestDto input)
         {
             return Repository.GetAll().Include(p => p.ProjectEmployees).ThenInclude(x => x.Project)
-                 .Include(p => p.EmployeeSkills).ThenInclude(x => x.Skill);
+                 .Include(p => p.EmployeeSkills).ThenInclude(x => x.Skill)
+                 .Include(p => p.JobTitle);
         }
 
         public override EmployeeDto Get(EntityDto<int> input)
