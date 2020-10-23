@@ -1,6 +1,6 @@
 export default class CreateProjectInput {
   name!: string;
   startdate!: Date;
-  enddate!: Date | null | undefined;
+  enddate!: Date | undefined | null;
   cost!: number;
 }

@@ -150,7 +150,10 @@ class Project extends AppComponentBase<IProjectProps, IProjectState> {
     const columns = [
       { title: L('Name'), dataIndex: 'name', key: 'name', width: 150, render: (text: string) => <div>{text}</div> },
       { title: L('Start Date'), dataIndex: 'startdate', key: 'startdate', width: 150, render: (text: string) => <div>{moment(text).format("MMMM Do, YYYY")}</div> },
-      { title: L('End Date'), dataIndex: 'enddate', key: 'enddate', width: 150, render: (text: string) => <div>{moment(text).format("MMMM Do, YYYY")}</div> },
+      { title: L('End Date'), dataIndex: 'enddate', key: 'enddate', width: 150, render: (text: string) => 
+
+      <div>{moment(text).isAfter(moment("0001-01-01")) ? moment(text).format("MMMM Do, YYYY") : "Ongoing"}</div> },
+
       { title: L('Base Cost'), dataIndex: 'cost', key: 'cost', width: 150, render: (text: string) => <div>{text}</div> },
 
       /* {
