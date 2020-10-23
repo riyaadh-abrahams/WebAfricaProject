@@ -6,6 +6,7 @@ import AuthenticationStore from './authenticationStore';
 import AccountStore from './accountStore';
 import EmployeeStore from './employeeStore';
 import JobTitleStore from './jobTitleStore';
+import ProjectStore from './projectStore';
 
 export default function initializeStores() {
   return {
@@ -17,5 +18,6 @@ export default function initializeStores() {
     accountStore: new AccountStore(),
     employeeStore: new EmployeeStore(),
     jobTitleStore: new JobTitleStore(),
+    projectStore: new ProjectStore(),
   };
 }

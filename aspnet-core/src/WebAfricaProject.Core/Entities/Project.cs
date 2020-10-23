@@ -47,7 +47,7 @@ namespace WebAfricaProject.Entities
 	}
 
 	[AutoMap(typeof(Project))]
-	public class CreateOrUpdateJobTitleDtoProjectDto : EntityDto
+	public class CreateOrUpdateProjectDto : EntityDto
 	{
 		public string Name { get; set; }
 		public DateTime Startdate { get; set; }

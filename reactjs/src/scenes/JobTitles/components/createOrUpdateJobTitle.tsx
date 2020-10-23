@@ -63,6 +63,9 @@ class CreateOrUpdateJobTitle extends React.Component<ICreateOrUpdateJobTitleProp
           <FormItem label={L('Job Title')} {...formItemLayout}>
             {getFieldDecorator('jobTitleLabel', { rules: rules.jobTitle })(<Input />)}
           </FormItem>
+          <FormItem label={L('Extra Project Costs')} {...formItemLayout}>
+            {getFieldDecorator('extraProjectCost', { rules: rules.extraProjectCosts })(<Input type="number" />)}
+          </FormItem>
         </Form>
       </Modal>
     );

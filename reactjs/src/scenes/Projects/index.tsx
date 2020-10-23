@@ -1,41 +1,46 @@
 import './index.less';
 import * as React from 'react';
 
-import { Button, Card, Col, Dropdown, Input, Menu, Modal, Row, Table, /* Tag */ } from 'antd';
+import { Button, Card, Col, Dropdown, Input, Menu, Modal, Row, Table, Tag, /* Tag */ } from 'antd';
 import { inject, observer } from 'mobx-react';
 
 import AppComponentBase from '../../components/AppComponentBase';
-import CreateOrUpdateJobTitle from './components/createOrUpdateJobTitle';
+import CreateOrUpdateProject from './components/createOrUpdateProject';
 import { EntityDto } from '../../services/dto/entityDto';
 import { L } from '../../lib/abpUtility';
 import Stores from '../../stores/storeIdentifier';
+import ProjectStore from '../../stores/projectStore';
 import JobTitleStore from '../../stores/jobTitleStore';
+import moment from 'moment';
+import UpdateProjectInput from '../../services/project/dto/updateProjectInput';
 
-export interface IJobTitleProps {
+export interface IProjectProps {
+  projectStore: ProjectStore;
   jobTitleStore: JobTitleStore;
 }
 
-export interface IJobTitleState {
+export interface IProjectState {
   modalVisible: boolean;
   maxResultCount: number;
   skipCount: number;
-  jobTitleId: number;
+  projectId: number;
   filter: string;
 }
 
 const confirm = Modal.confirm;
 const Search = Input.Search;
 
+@inject(Stores.ProjectStore)
 @inject(Stores.JobTitleStore)
 @observer
-class JobTitle extends AppComponentBase<IJobTitleProps, IJobTitleState> {
+class Project extends AppComponentBase<IProjectProps, IProjectState> {
   formRef: any;
 
   state = {
     modalVisible: false,
     maxResultCount: 10,
     skipCount: 0,
-    jobTitleId: 0,
+    projectId: 0,
     filter: '',
   };
 
@@ -44,7 +49,7 @@ class JobTitle extends AppComponentBase<IJobTitleProps, IJobTitleState> {
   }
 
   async getAll() {
-    await this.props.jobTitleStore.getAll({ maxResultCount: this.state.maxResultCount, skipCount: this.state.skipCount, keyword: this.state.filter });
+    await this.props.projectStore.getAll({ maxResultCount: this.state.maxResultCount, skipCount: this.state.skipCount, keyword: this.state.filter });
   }
 
   handleTableChange = (pagination: any) => {
@@ -59,17 +64,21 @@ class JobTitle extends AppComponentBase<IJobTitleProps, IJobTitleState> {
 
   async createOrUpdateModalOpen(entityDto: EntityDto) {
     if (entityDto.id === 0) {
-      this.props.jobTitleStore.createJobTitle();
+      this.props.projectStore.createProject();
     } else {
-      await this.props.jobTitleStore.get(entityDto);
+      await this.props.projectStore.get(entityDto);
     }
 
-    this.setState({ jobTitleId: entityDto.id });
+    this.setState({ projectId: entityDto.id });
     this.Modal();
 
     if (entityDto.id !== 0) {
       this.formRef.props.form.setFieldsValue({
-        ...this.props.jobTitleStore.jobTitleModel,
+        id: this.props.projectStore.projectModel.id,
+        name: this.props.projectStore.projectModel.name,
+        startdate: moment(this.props.projectStore.projectModel.startdate),
+        enddate: moment(this.props.projectStore.projectModel.enddate),
+        cost: this.props.projectStore.projectModel.cost
       });
     } else {
       this.formRef.props.form.resetFields();
@@ -81,7 +90,7 @@ class JobTitle extends AppComponentBase<IJobTitleProps, IJobTitleState> {
     confirm({
       title: 'Do you Want to delete these items?',
       onOk() {
-        self.props.jobTitleStore.delete(input);
+        self.props.projectStore.delete(input);
       },
       onCancel() {},
     });
@@ -93,10 +102,16 @@ class JobTitle extends AppComponentBase<IJobTitleProps, IJobTitleState> {
       if (err) {
         return;
       } else {
-        if (this.state.jobTitleId === 0) {
-          await this.props.jobTitleStore.create(values);
+        if (this.state.projectId === 0) {
+          await this.props.projectStore.create(values);
         } else {
-          await this.props.jobTitleStore.update({ id: this.state.jobTitleId, ...values });
+
+          var updateInfo: UpdateProjectInput = { id: this.state.projectId, ...values };
+          if(updateInfo.enddate==null){
+            updateInfo.enddate=undefined;
+          }
+
+          await this.props.projectStore.update(updateInfo);
         }
       }
 
@@ -114,11 +129,30 @@ class JobTitle extends AppComponentBase<IJobTitleProps, IJobTitleState> {
     this.setState({ filter: value }, async () => await this.getAll());
   };
 
+  public hashCode(str: string) { 
+    var hash = 0;
+    for (var i = 0; i < str.length; i++) {
+       hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return hash;
+  } 
+
+  public intToRGB(i: number){
+      var c = (i & 0x00FFFFFF)
+          .toString(16)
+          .toUpperCase();
+
+      return "00000".substring(0, 6 - c.length) + c;
+  }
+
   public render() {
-    const { jobTitles } = this.props.jobTitleStore;
+    const { projects } = this.props.projectStore;
     const columns = [
-      { title: L('Job Title'), dataIndex: 'jobTitleLabel', key: 'jobTitleLabel', width: 150, render: (text: string) => <div>{text}</div> },
-      { title: L('Extra Project Cost'), dataIndex: 'extraProjectCost', key: 'extraProjectCost', width: 150, render: (text: string) => <div>{text}</div> },
+      { title: L('Name'), dataIndex: 'name', key: 'name', width: 150, render: (text: string) => <div>{text}</div> },
+      { title: L('Start Date'), dataIndex: 'startdate', key: 'startdate', width: 150, render: (text: string) => <div>{moment(text).format("MMMM Do, YYYY")}</div> },
+      { title: L('End Date'), dataIndex: 'enddate', key: 'enddate', width: 150, render: (text: string) => <div>{moment(text).format("MMMM Do, YYYY")}</div> },
+      { title: L('Base Cost'), dataIndex: 'cost', key: 'cost', width: 150, render: (text: string) => <div>{text}</div> },
+
       /* {
         title: L('Job'),
         dataIndex: 'jobTitleId',
@@ -161,7 +195,7 @@ class JobTitle extends AppComponentBase<IJobTitleProps, IJobTitleState> {
             xl={{ span: 2, offset: 0 }}
             xxl={{ span: 2, offset: 0 }}
           >
-            <h2>{L('JobTitles')}</h2>
+            <h2>{L('Projects')}</h2>
           </Col>
           <Col
             xs={{ span: 14, offset: 0 }}
@@ -179,7 +213,7 @@ class JobTitle extends AppComponentBase<IJobTitleProps, IJobTitleState> {
           <Col sm={{ span: 10, offset: 0 }}>
             <Search placeholder={this.L('Filter')} onSearch={this.handleSearch} />
           </Col>
-          <Col><Button type="primary"  icon="plus" onClick={() => this.createOrUpdateModalOpen({ id: 0 })}> {L('Add Job Title')} </Button></Col>
+          <Col><Button type="primary"  icon="plus" onClick={() => this.createOrUpdateModalOpen({ id: 0 })}> {L('Add Project')} </Button></Col>
         </Row>
         <Row style={{ marginTop: 20 }}>
           <Col
@@ -194,23 +228,24 @@ class JobTitle extends AppComponentBase<IJobTitleProps, IJobTitleState> {
               rowKey="id"
               size={'default'}
               bordered={true}
-              pagination={{ pageSize: this.state.maxResultCount, total: jobTitles === undefined ? 0 : jobTitles.totalCount, defaultCurrent: 1 }}
+              pagination={{ pageSize: this.state.maxResultCount, total: projects === undefined ? 0 : projects.totalCount, defaultCurrent: 1 }}
               columns={columns}
-              loading={jobTitles === undefined ? true : false}
-              dataSource={jobTitles === undefined ? [] : jobTitles.items}
+              loading={projects === undefined ? true : false}
+              dataSource={projects === undefined ? [] : projects.items}
               onChange={this.handleTableChange}
             />
           </Col>
         </Row>
-        <CreateOrUpdateJobTitle
+        <CreateOrUpdateProject
           wrappedComponentRef={this.saveFormRef}
           visible={this.state.modalVisible}
+          jobTitleStore= {this.props.jobTitleStore}
           onCancel={() =>
             this.setState({
               modalVisible: false,
             })
           }
-          modalType={this.state.jobTitleId === 0 ? 'edit' : 'create'}
+          modalType={this.state.projectId === 0 ? 'edit' : 'create'}
           onCreate={this.handleCreate}
         />
       </Card>
@@ -218,4 +253,4 @@ class JobTitle extends AppComponentBase<IJobTitleProps, IJobTitleState> {
   }
 }
 
-export default JobTitle;
+export default Project;

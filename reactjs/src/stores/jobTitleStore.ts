@@ -22,6 +22,7 @@ class JobTitleStore {
   async createJobTitle() {
     this.jobTitleModel = {
       jobTitleLabel: '',
+      extraProjectCost: 0,
       id: 0,
     };
   }

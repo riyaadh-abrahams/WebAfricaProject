@@ -94,6 +94,15 @@ export const appRouters: any = [
     component: LoadableComponent(() => import('../../scenes/JobTitles')),
   },
   {
+    path: '/projects',
+    permission: '',
+    title: 'Projects',
+    name: 'projects',
+    icon: 'info-circle',
+    showInMenu: true,
+    component: LoadableComponent(() => import('../../scenes/Projects')),
+  },
+  {
     path: '/logout',
     permission: '',
     title: 'Logout',
