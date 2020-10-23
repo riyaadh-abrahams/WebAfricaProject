@@ -12,7 +12,7 @@ Clone the repository
 ```bash
 git clone https://github.com/riyaadh-abrahams/WebAfricaProject
 ```
-### Set up the back-end
+## Running the back-end
 - Open up the Asp .Net Core solution. 
 - Set the Startup Project to be `WebAfricaProject.Web.Host`
 - Set the connection string to a clean database.
@@ -29,6 +29,16 @@ cd reactjs
 npm install
 npm start
 ```
+
+## Running The Console App
+The Console App is a repurpose of the Migrator App that comes with aspnetboilerplate. It has access to all the repositories through inversion of control system, so no need to access the DB directly
+
+- Open up the Asp .Net Core solution. 
+- Set the Startup Project to be `WebAfricaProject.ConsoleApp`
+- Set the connection string to a clean database.
+- Run the App.
+
+The seed data will automatically be added to the database. 
 
 ## Cool Features
 - Custom Seed Data scripts.
