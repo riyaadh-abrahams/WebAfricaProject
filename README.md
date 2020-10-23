@@ -1,37 +1,43 @@
-# Important
+# Web Africa Coding Assessment
 
-Issues of this repository are tracked on https://github.com/aspnetboilerplate/aspnetboilerplate. Please create your issues on https://github.com/aspnetboilerplate/aspnetboilerplate/issues.
+This project management application is built using [aspnetboilerplate](https://aspnetboilerplate.com). The reason for this is that is has a good achitecture by default. It uses multiple layers on the back end, as well as a good React Architecture on the front end.
 
-# Introduction
+## Live Demo
+You can view the application [here](https://codeworks-web.web.app). The back end is hosted on Azure, and the front end is hosted on firebase hosting.
 
-This is a template to create **ASP.NET Core MVC / Angular** based startup projects for [ASP.NET Boilerplate](https://aspnetboilerplate.com/Pages/Documents). It has 2 different versions:
+## Installation
 
-1. [ASP.NET Core MVC & jQuery](https://aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Core) (server rendered multi-page application).
-2. [ASP.NET Core & Angular](https://aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Angular) (single page application).
- 
-User Interface is based on [AdminLTE theme](https://github.com/ColorlibHQ/AdminLTE).
- 
-# Download
+Clone the repository
 
-Create & download your project from https://aspnetboilerplate.com/Templates
+```bash
+git clone https://github.com/riyaadh-abrahams/WebAfricaProject
+```
+### Set up the back-end
+- Open up the Asp .Net Core solution. 
+- Set the Startup Project to be `WebAfricaProject.Web.Host`
+- Set the connection string to a clean database.
+- In the package manager console, set `WebAfricaProject.EntityFrameworkCore` as the Default project
+- Enter `update-database` to run the migrations.
+- Start the server
 
-# Screenshots
+The seed data will automatically be added to the database. 
 
-#### Sample Dashboard Page
-![](_screenshots/module-zero-core-template-ui-home.png)
+## Running the React app
 
-#### User Creation Modal
-![](_screenshots/module-zero-core-template-ui-user-create-modal.png)
+```
+cd reactjs
+npm install
+npm start
+```
 
-#### Login Page
+## Cool Features
+- Custom Seed Data scripts.
+- Full CRUD for Employees, Jobs and Projects
+- Mobx State Management
+- Fancy Datepickers.
+- Dynamic Job Dropdown when adding Employees.
 
-![](_screenshots/module-zero-core-template-ui-login.png)
-
-# Documentation
-
-* [ASP.NET Core MVC & jQuery version.](https://aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Core)
-* [ASP.NET Core & Angular  version.](https://aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Angular)
-
-# License
-
-[MIT](LICENSE).
+## Assumptions & Issues
+- The Skills Table was not mentioned, so there is no Front end features using it. There was enough many-to-many tables to deal with
+- The provided user table stored raw passwords, so it was tossed. The ABP User table is now used, and passwords are hashed. The 2 users that were given added by default. 
+- The database was rebuilt using code-first approach. This was to ensure better integration with entity framework core.
