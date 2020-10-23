@@ -26,7 +26,8 @@ class EmployeeStore {
       name: '',
       surname: '',
       jobTitleId: 0,
-      jobTitle: new JobTitleModel()
+      jobTitle: new JobTitleModel(),
+      dateOfBirth: new Date()
     };
   }
 

@@ -18,18 +18,18 @@ namespace WebAfricaProject.EntityFrameworkCore.Seed.Host
 
             return new List<Employee>
             {
-                new Employee("Riyaadh", "Abrahams", _context.JobTitles.FirstOrDefault(x => x.JobTitleLabel == "Developer").Id),
-                new Employee("John", "Wick", _context.JobTitles.FirstOrDefault(x => x.JobTitleLabel == "Business Analyst").Id),
-                new Employee("Dani", "Welbeck", _context.JobTitles.FirstOrDefault(x => x.JobTitleLabel == "Business Analyst").Id),
-                new Employee("Alexis", "Sanchez", _context.JobTitles.FirstOrDefault(x => x.JobTitleLabel == "DBA").Id),
-                new Employee("Mesut", "Ozil",  _context.JobTitles.FirstOrDefault(x => x.JobTitleLabel == "Developer").Id),
-                new Employee("Musa" , "Dembele", _context.JobTitles.FirstOrDefault(x => x.JobTitleLabel == "DBA").Id),
-                new Employee("Harry", "Kane", _context.JobTitles.FirstOrDefault(x => x.JobTitleLabel == "Tester").Id),
-                new Employee("David", "Silva", _context.JobTitles.FirstOrDefault(x => x.JobTitleLabel == "Developer").Id),
-                new Employee("Roy", "Keane", _context.JobTitles.FirstOrDefault(x => x.JobTitleLabel == "DBA").Id),
-                new Employee("Dele", "Alli", _context.JobTitles.FirstOrDefault(x => x.JobTitleLabel == "Developer").Id),
-                new Employee("Romelu", "Lukaku", _context.JobTitles.FirstOrDefault(x => x.JobTitleLabel == "Developer").Id),
-                new Employee("Anthony", "Martial", _context.JobTitles.FirstOrDefault(x => x.JobTitleLabel == "DBA").Id)
+                new Employee("Riyaadh", "Abrahams", _context.JobTitles.FirstOrDefault(x => x.JobTitleLabel == "Developer").Id, new System.DateTime(1998,1,26)),
+                new Employee("John", "Wick", _context.JobTitles.FirstOrDefault(x => x.JobTitleLabel == "Business Analyst").Id, new System.DateTime(1984,6,8)),
+                new Employee("Dani", "Welbeck", _context.JobTitles.FirstOrDefault(x => x.JobTitleLabel == "Business Analyst").Id, new System.DateTime(1979,7,15)),
+                new Employee("Alexis", "Sanchez", _context.JobTitles.FirstOrDefault(x => x.JobTitleLabel == "DBA").Id, new System.DateTime(1947,1,5)),
+                new Employee("Mesut", "Ozil",  _context.JobTitles.FirstOrDefault(x => x.JobTitleLabel == "Developer").Id, new System.DateTime(1994,6,21)),
+                new Employee("Musa" , "Dembele", _context.JobTitles.FirstOrDefault(x => x.JobTitleLabel == "DBA").Id, new System.DateTime(1996,4,2)),
+                new Employee("Harry", "Kane", _context.JobTitles.FirstOrDefault(x => x.JobTitleLabel == "Tester").Id, new System.DateTime(1978,9,2)),
+                new Employee("David", "Silva", _context.JobTitles.FirstOrDefault(x => x.JobTitleLabel == "Developer").Id, new System.DateTime(2001,2,5)),
+                new Employee("Roy", "Keane", _context.JobTitles.FirstOrDefault(x => x.JobTitleLabel == "DBA").Id, new System.DateTime(1995,6,19)),
+                new Employee("Dele", "Alli", _context.JobTitles.FirstOrDefault(x => x.JobTitleLabel == "Developer").Id, new System.DateTime(1950,1,14)),
+                new Employee("Romelu", "Lukaku", _context.JobTitles.FirstOrDefault(x => x.JobTitleLabel == "Developer").Id, new System.DateTime(1999,6,25)),
+                new Employee("Anthony", "Martial", _context.JobTitles.FirstOrDefault(x => x.JobTitleLabel == "DBA").Id, new System.DateTime(2000,1,2))
 
 
 

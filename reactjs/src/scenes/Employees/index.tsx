@@ -11,6 +11,7 @@ import { L } from '../../lib/abpUtility';
 import Stores from '../../stores/storeIdentifier';
 import EmployeeStore from '../../stores/employeeStore';
 import JobTitleStore from '../../stores/jobTitleStore';
+import moment from 'moment';
 
 export interface IEmployeeProps {
   employeeStore: EmployeeStore;
@@ -72,7 +73,12 @@ class Employee extends AppComponentBase<IEmployeeProps, IEmployeeState> {
 
     if (entityDto.id !== 0) {
       this.formRef.props.form.setFieldsValue({
-        ...this.props.employeeStore.employeeModel,
+        id: this.props.employeeStore.employeeModel.id,
+        name: this.props.employeeStore.employeeModel.name,
+        surname: this.props.employeeStore.employeeModel.surname,
+        jobTitleId: this.props.employeeStore.employeeModel.jobTitleId,
+        jobTitle: this.props.employeeStore.employeeModel.jobTitle,
+        dateOfBirth: moment(this.props.employeeStore.employeeModel.dateOfBirth)
       });
     } else {
       this.formRef.props.form.resetFields();
@@ -138,7 +144,9 @@ class Employee extends AppComponentBase<IEmployeeProps, IEmployeeState> {
     const columns = [
       { title: L('Name'), dataIndex: 'name', key: 'name', width: 150, render: (text: string) => <div>{text}</div> },
       { title: L('Surname'), dataIndex: 'surname', key: 'surname', width: 150, render: (text: string) => <div>{text}</div> },
-      { title: L('Job Title'), dataIndex: 'jobTitle.jobTitleLabel', key: 'obTitle.jobTitleLabel', width: 150, render: (text: string) => <Tag color="#5c6976">{text}</Tag> },
+      { title: L('Date of Birth'), dataIndex: 'dateOfBirth', key: 'dateOfBirth', width: 150, render: (text: string) => <div>{moment(text).format("MMMM Do, YYYY")}</div> },
+      { title: L('Job Title'), dataIndex: 'jobTitle.jobTitleLabel', key: 'obTitle.jobTitleLabel', 
+        width: 150, render: (text: string) => <Tag color="#5c6976">{ text }</Tag> },
       /* {
         title: L('Job'),
         dataIndex: 'jobTitleId',

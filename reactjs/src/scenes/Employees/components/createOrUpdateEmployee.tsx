@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Form, Input, Modal, Select } from 'antd';
+import { DatePicker, Form, Input, Modal, Select } from 'antd';
 
 import { FormComponentProps } from 'antd/lib/form';
 import FormItem from 'antd/lib/form/FormItem';
@@ -9,6 +9,7 @@ import rules from './createOrUpdateEmployee.validation';
 import JobTitleStore from '../../../stores/jobTitleStore';
 import { inject } from 'mobx-react';
 import Stores from '../../../stores/storeIdentifier';
+
 
 export interface ICreateOrUpdateEmployeeProps extends FormComponentProps {
   visible: boolean;
@@ -117,6 +118,12 @@ class CreateOrUpdateEmployee extends React.Component<ICreateOrUpdateEmployeeProp
             {getFieldDecorator('surname', { rules: rules.surname })(<Input />)}
           </FormItem>
 
+          <FormItem label={L('Date of Birth')} {...formItemLayout}>
+            {getFieldDecorator('dateOfBirth', { rules: rules.dateOfBirth })(
+              <DatePicker />
+            )}
+          </FormItem>
+
 {/*           {this.props.modalType === 'edit' ? (
             <FormItem label={L('DatabaseConnectionString')} {...formItemLayout}>
               {getFieldDecorator('connectionString')(<Input />)}
@@ -125,7 +132,7 @@ class CreateOrUpdateEmployee extends React.Component<ICreateOrUpdateEmployeeProp
           <FormItem label={L('Job Title')} {...tailFormItemLayout}>
             {getFieldDecorator('jobTitleId', {rules: rules.jobTitleId})(
 
-            <Select style={{ width: 120 }}/*  onChange={handleChange} */>
+            <Select /*  onChange={handleChange} */>
              {jobOptions}
             
           </Select>

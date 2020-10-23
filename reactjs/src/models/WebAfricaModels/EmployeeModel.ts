@@ -5,6 +5,7 @@ class EmployeeModel {
   surname!: string;
   jobTitleId!: number;
   jobTitle!: JobTitleModel;
+  dateOfBirth!: Date;
   id!: number;
 }
 

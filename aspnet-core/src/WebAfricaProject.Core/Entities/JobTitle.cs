@@ -11,14 +11,19 @@ namespace WebAfricaProject.Entities
 {
     public class JobTitle : Entity
     {
-        public JobTitle(string jobTitleLabel)
+        public JobTitle(string jobTitleLabel, double extraProjectCost)
         {
             JobTitleLabel = jobTitleLabel;
+            ExtraProjectCost = extraProjectCost;
         }
 
         [Required]
         [Column(TypeName = "VARCHAR(150)")]
         public string JobTitleLabel { get; set; }
+
+        [Required]
+        [Column(TypeName = "decimal(18, 2)")]
+        public double ExtraProjectCost { get; set; }
 
     }
 
@@ -26,6 +31,7 @@ namespace WebAfricaProject.Entities
     public class JobTitleDto : EntityDto
     {
         public string JobTitleLabel { get; set; }
+        public double ExtraProjectCost { get; set; }
 
     }
 
@@ -33,6 +39,7 @@ namespace WebAfricaProject.Entities
     public class CreateOrUpdateJobTitleDto : EntityDto
     {
         public string JobTitleLabel { get; set; }
+        public double ExtraProjectCost { get; set; }
 
     }
 }

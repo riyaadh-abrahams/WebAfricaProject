@@ -6,4 +6,5 @@ export default interface UpdateEmployeeInput {
   jobTitleId: number;
   id: number;
   jobTitle: JobTitleModel;
+  dateOfBirth: Date;
 }

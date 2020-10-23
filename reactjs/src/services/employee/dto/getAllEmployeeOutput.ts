@@ -6,4 +6,5 @@ export interface GetAllEmployeeOutput {
   jobTitleId: number;
   id: number;
   jobTitle: JobTitleModel;
+  dateOfBirth: Date;
 }

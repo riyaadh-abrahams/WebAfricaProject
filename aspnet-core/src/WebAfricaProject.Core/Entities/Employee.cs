@@ -11,11 +11,12 @@ namespace WebAfricaProject.Entities
 {
     public class Employee : Entity
     {
-        public Employee(string name, string surname, int? jobTitleId)
+        public Employee(string name, string surname, int? jobTitleId, DateTime dateOfBirth)
         {
             Name = name;
             Surname = surname;
             JobTitleId = jobTitleId;
+            DateOfBirth = dateOfBirth;
         }
 
         [Required]
@@ -31,6 +32,9 @@ namespace WebAfricaProject.Entities
         [Required]
         public JobTitle JobTitle { get; set; }
 
+        [Required]
+        public DateTime DateOfBirth { get; set; }
+
         public ICollection<ProjectEmployee> ProjectEmployees { get; set; }
         public ICollection<EmployeeSkill> EmployeeSkills { get; set; }
     }
@@ -42,6 +46,7 @@ namespace WebAfricaProject.Entities
         public string Surname { get; set; }
         public int? JobTitleId { get; set; }
         public JobTitle JobTitle { get; set; }
+        public DateTime DateOfBirth { get; set; }
 
         public List<Project> Projects { get; set; }
         public List<Skill> Skills { get; set; }
@@ -53,5 +58,6 @@ namespace WebAfricaProject.Entities
         public string Name { get; set; }
         public string Surname { get; set; }
         public int? JobTitleId { get; set; }
+        public DateTime DateOfBirth { get; set; }
     }
 }

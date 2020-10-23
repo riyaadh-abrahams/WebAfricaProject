@@ -18,10 +18,10 @@ namespace WebAfricaProject.EntityFrameworkCore.Seed.Host
             var tenantId = WebAfricaProjectConsts.MultiTenancyEnabled ? null : (int?)MultiTenancyConsts.DefaultTenantId;
             return new List<JobTitle>
             {
-                new JobTitle("Developer"),
-                new JobTitle("DBA"),
-                new JobTitle("Tester"),
-                new JobTitle("Business Analyst")
+                new JobTitle("Developer", 2500d),
+                new JobTitle("DBA", 3000d),
+                new JobTitle("Tester", 1000d),
+                new JobTitle("Business Analyst", 4500d)
 
             };
         }
@@ -46,7 +46,7 @@ namespace WebAfricaProject.EntityFrameworkCore.Seed.Host
 
         private void AddJobTitleIfNotExists(JobTitle jobTitle)
         {
-            if (_context.JobTitles.IgnoreQueryFilters().Any(l => l.JobTitleLabel == jobTitle.JobTitleLabel))
+            if (_context.JobTitles.IgnoreQueryFilters().Any(l => l.JobTitleLabel == jobTitle.JobTitleLabel && l.ExtraProjectCost == jobTitle.ExtraProjectCost))
             {
                 return;
             }

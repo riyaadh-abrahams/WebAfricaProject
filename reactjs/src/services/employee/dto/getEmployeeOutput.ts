@@ -6,4 +6,5 @@ export default class GetEmployeeOutput {
   jobTitleId!: number;
   jobTitle!: JobTitleModel;
   id!: number;
+  dateOfBirth!: Date;
 }
