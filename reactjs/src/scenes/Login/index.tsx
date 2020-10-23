@@ -1,4 +1,5 @@
 import './index.less';
+import logo from '../../images/webafrica_logo_black.png';
 
 import * as React from 'react';
 
@@ -80,7 +81,7 @@ class Login extends React.Component<ILoginProps> {
       <Col className="name">
         <Form className="" onSubmit={this.handleSubmit}>
           <Row>
-            <Row style={{ marginTop: 100 }}>
+           {/*  <Row style={{ marginTop: 100 }}>
               <Col span={8} offset={8}>
                 <Card>
                   <Row>
@@ -100,7 +101,7 @@ class Login extends React.Component<ILoginProps> {
                   </Row>
                 </Card>
               </Col>
-            </Row>
+            </Row> */}
 
             <Row>
               <Modal
@@ -130,7 +131,8 @@ class Login extends React.Component<ILoginProps> {
               <Col span={8} offset={8}>
                 <Card>
                   <div style={{ textAlign: 'center' }}>
-                    <h3>{L('WellcomeMessage')}</h3>
+                  <img src={logo} alt="Logo" />
+                    <h3>{L('Welcome to Web Africa Project Management')}</h3>
                   </div>
                   <FormItem>
                     {getFieldDecorator('userNameOrEmailAddress', { rules: rules.userNameOrEmailAddress })(
