@@ -5,9 +5,9 @@ using Abp.Modules;
 using Abp.Reflection.Extensions;
 using WebAfricaProject.Configuration;
 using WebAfricaProject.EntityFrameworkCore;
-using WebAfricaProject.Migrator.DependencyInjection;
+using WebAfricaProject.ConsoleApp.DependencyInjection;
 
-namespace WebAfricaProject.Migrator
+namespace WebAfricaProject.ConsoleApp
 {
     [DependsOn(typeof(WebAfricaProjectEntityFrameworkModule))]
     public class WebAfricaProjectMigratorModule : AbpModule

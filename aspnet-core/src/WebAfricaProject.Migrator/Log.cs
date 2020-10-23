@@ -3,7 +3,7 @@ using Castle.Core.Logging;
 using Abp.Dependency;
 using Abp.Timing;
 
-namespace WebAfricaProject.Migrator
+namespace WebAfricaProject.ConsoleApp
 {
     public class Log : ITransientDependency
     {

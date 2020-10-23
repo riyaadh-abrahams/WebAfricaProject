@@ -5,7 +5,7 @@ using Abp.Castle.Logging.Log4Net;
 using Abp.Collections.Extensions;
 using Abp.Dependency;
 
-namespace WebAfricaProject.Migrator
+namespace WebAfricaProject.ConsoleApp
 {
     public class Program
     {
@@ -24,21 +24,10 @@ namespace WebAfricaProject.Migrator
 
                 bootstrapper.Initialize();
 
-                using (var migrateExecuter = bootstrapper.IocManager.ResolveAsDisposable<MultiTenantMigrateExecuter>())
+
+                using (var migrateExecuter = bootstrapper.IocManager.ResolveAsDisposable<EmployeeAdder>())
                 {
                     var migrationSucceeded = migrateExecuter.Object.Run(_quietMode);
-                    
-                    if (_quietMode)
-                    {
-                        // exit clean (with exit code 0) if migration is a success, otherwise exit with code 1
-                        var exitCode = Convert.ToInt32(!migrationSucceeded);
-                        Environment.Exit(exitCode);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Press ENTER to exit...");
-                        Console.ReadLine();
-                    }
                 }
             }
         }

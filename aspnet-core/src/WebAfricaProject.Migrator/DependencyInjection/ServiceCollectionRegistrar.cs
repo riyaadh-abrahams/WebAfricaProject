@@ -3,7 +3,7 @@ using Castle.Windsor.MsDependencyInjection;
 using Abp.Dependency;
 using WebAfricaProject.Identity;
 
-namespace WebAfricaProject.Migrator.DependencyInjection
+namespace WebAfricaProject.ConsoleApp.DependencyInjection
 {
     public static class ServiceCollectionRegistrar
     {
