@@ -34,7 +34,7 @@ export class Header extends React.Component<IHeaderProps> {
           <Icon className="trigger" type={this.props.collapsed ? 'menu-unfold' : 'menu-fold'} onClick={this.props.toggle} />
         </Col>
         <Col style={{ padding: '0px 15px 0px 15px', textAlign: 'right' }} span={12}>
-
+          
           <Dropdown overlay={userDropdownMenu} trigger={['click']}>
             <Badge style={{}}>
               <Avatar style={{height:35, width:35}} shape="circle" alt={'profile'} src={profilePicture} />
