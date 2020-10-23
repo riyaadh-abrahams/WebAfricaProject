@@ -92,6 +92,57 @@ namespace WebAfricaProject.EntityFrameworkCore.Seed.Host
                 _context.SaveChanges();
 
                 _context.SaveChanges();
+
+                //Add David Beckham
+
+                var david = new User
+                {
+                    TenantId = 1,
+                    UserName = "davidb",
+                    Name = "David",
+                    Surname = "Beckham",
+                    EmailAddress = "david.beckham@retiredsoccerplayers.co.za",
+                    IsEmailConfirmed = true,
+                    IsActive = true
+                };
+
+                david.Password = new PasswordHasher<User>(new OptionsWrapper<PasswordHasherOptions>(new PasswordHasherOptions())).HashPassword(david, "goldenballs");
+                david.SetNormalizedNames();
+
+                var davidUserForHost = _context.Users.Add(david).Entity;
+                _context.SaveChanges();
+
+                _context.UserRoles.Add(new UserRole(null, davidUserForHost.Id, adminRoleForHost.Id));
+                _context.SaveChanges();
+
+                _context.SaveChanges();
+
+
+                //Add Ryan Giggs
+
+                var ryan = new User
+                {
+                    TenantId = 1,
+                    UserName = "ryang",
+                    Name = "Ryan",
+                    Surname = "Giggs",
+                    EmailAddress = "ryang@retiredsoccerplayers.co.za",
+                    IsEmailConfirmed = true,
+                    IsActive = true
+                };
+
+                ryan.Password = new PasswordHasher<User>(new OptionsWrapper<PasswordHasherOptions>(new PasswordHasherOptions())).HashPassword(ryan, "runningdownthewing");
+                ryan.SetNormalizedNames();
+
+                var ryanUserForHost = _context.Users.Add(ryan).Entity;
+                _context.SaveChanges();
+
+   
+                _context.UserRoles.Add(new UserRole(null, ryanUserForHost.Id, adminRoleForHost.Id));
+                _context.SaveChanges();
+
+                _context.SaveChanges();
+
             }
         }
     }

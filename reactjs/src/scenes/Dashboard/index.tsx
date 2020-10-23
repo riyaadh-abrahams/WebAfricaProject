@@ -93,6 +93,7 @@ export class Dashboard extends React.Component<IDashboardProps, IDashboardState>
       
     } }}
     dataSource={projects === undefined ? [] : projects.items}
+    loading={projects === undefined ? true : false}
 
     renderItem={item  => (
       <List.Item
