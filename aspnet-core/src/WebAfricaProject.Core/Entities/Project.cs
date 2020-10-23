@@ -43,7 +43,8 @@ namespace WebAfricaProject.Entities
 		public DateTime Enddate { get; set; }
 		public double Cost { get; set; }
 
-		public ICollection<ProjectEmployee> ProjectEmployees { get; set; }
+		public List<Employee> Employees { get; set; }
+		public double TotalCost { get; set; }
 	}
 
 	[AutoMap(typeof(Project))]

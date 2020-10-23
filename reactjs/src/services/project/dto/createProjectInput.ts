@@ -3,4 +3,5 @@ export default class CreateProjectInput {
   startdate!: Date;
   enddate!: Date | undefined | null;
   cost!: number;
+  totalCost!: number;
 }

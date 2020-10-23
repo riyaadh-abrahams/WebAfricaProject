@@ -231,11 +231,10 @@ class Project extends AppComponentBase<IProjectProps, IProjectState> {
               rowKey="id"
               size={'default'}
               bordered={true}
-              pagination={{ pageSize: this.state.maxResultCount, total: projects === undefined ? 0 : projects.totalCount, defaultCurrent: 1 }}
+              pagination={{ pageSize: this.state.maxResultCount, total: projects === undefined ? 0 : projects.totalCount, defaultCurrent: 1}}
               columns={columns}
               loading={projects === undefined ? true : false}
               dataSource={projects === undefined ? [] : projects.items}
-              onChange={this.handleTableChange}
             />
           </Col>
         </Row>

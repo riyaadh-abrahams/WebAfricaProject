@@ -6,6 +6,7 @@ import PieChartExample from './components/PieChartExample';
 import ProjectStore from '../../stores/projectStore';
 import { inject, observer } from 'mobx-react';
 import Stores from '../../stores/storeIdentifier';
+import moment from 'moment';
 
 export interface IDashboardProps {
   projectStore: ProjectStore;
@@ -27,7 +28,7 @@ export class Dashboard extends React.Component<IDashboardProps, IDashboardState>
 
   state = {
     modalVisible: false,
-    maxResultCount: 10,
+    maxResultCount: 4,
     skipCount: 0,
     projectId: 0,
     filter: '',
@@ -76,122 +77,42 @@ export class Dashboard extends React.Component<IDashboardProps, IDashboardState>
 
     return (
       <React.Fragment>
-        <Row gutter={16}>
-          <Col
-            className={'dashboardCard'}
-            xs={{ offset: 1, span: 22 }}
-            sm={{ offset: 1, span: 22 }}
-            md={{ offset: 1, span: 11 }}
-            lg={{ offset: 1, span: 11 }}
-            xl={{ offset: 0, span: 6 }}
-            xxl={{ offset: 0, span: 6 }}
-          >
-            <Card className={'dasboardCard-task'} bodyStyle={{ padding: 10 }} loading={cardLoading} bordered={false}>
-              <Col span={8}>
-                <Icon className={'dashboardCardIcon'} type="check" />
-              </Col>
-              <Col span={16}>
-                <p className={'dashboardCardName'}>New Task</p>
-                <label className={'dashboardCardCounter'}>125</label>
-              </Col>
-            </Card>
-          </Col>
-          <Col
-            className={'dashboardCard'}
-            xs={{ offset: 1, span: 22 }}
-            sm={{ offset: 1, span: 22 }}
-            md={{ offset: 1, span: 11 }}
-            lg={{ offset: 1, span: 11 }}
-            xl={{ offset: 0, span: 6 }}
-            xxl={{ offset: 0, span: 6 }}
-          >
-            <Card className={'dasboardCard-ticket'} bodyStyle={{ padding: 10 }} loading={cardLoading} bordered={false}>
-              <Col span={8}>
-                <Icon className={'dashboardCardIcon'} type="question" />
-              </Col>
-              <Col span={16}>
-                <p className={'dashboardCardName'}>New Ticket</p>
-                <label className={'dashboardCardCounter'}>257</label>
-              </Col>
-            </Card>
-          </Col>
-          <Col
-            className={'dashboardCard'}
-            xs={{ offset: 1, span: 22 }}
-            sm={{ offset: 1, span: 22 }}
-            md={{ offset: 1, span: 11 }}
-            lg={{ offset: 1, span: 11 }}
-            xl={{ offset: 0, span: 6 }}
-            xxl={{ offset: 0, span: 6 }}
-          >
-            <Card className={'dasboardCard-comment'} bodyStyle={{ padding: 10 }} loading={cardLoading} bordered={false}>
-              <Col span={8}>
-                <Icon className={'dashboardCardIcon'} type="message" />
-              </Col>
-              <Col span={16}>
-                <p className={'dashboardCardName'}>New Comments</p>
-                <label className={'dashboardCardCounter'}>243</label>
-              </Col>
-            </Card>
-          </Col>
-          <Col
-            className={'dashboardCard'}
-            xs={{ offset: 1, span: 22 }}
-            sm={{ offset: 1, span: 22 }}
-            md={{ offset: 1, span: 11 }}
-            lg={{ offset: 1, span: 11 }}
-            xl={{ offset: 0, span: 6 }}
-            xxl={{ offset: 0, span: 6 }}
-          >
-            <Card className={'dasboardCard-visitor'} bodyStyle={{ padding: 10 }} loading={cardLoading} bordered={false}>
-              <Col span={8}>
-                <Icon className={'dashboardCardIcon'} type="user-add" />
-              </Col>
-              <Col span={16}>
-                <p className={'dashboardCardName'}>New Visitors</p>
-                <label className={'dashboardCardCounter'}>1225</label>
-              </Col>
-            </Card>
-          </Col>
-        </Row>
+
 
         <Row gutter={16}>
-          <Col span={16}>
+          <Col>
             
           <Card title="Projects" className={'dashboardBox'} bordered={false}>
           <List
     itemLayout="vertical"
     size="large"
-    pagination={{ pageSize: this.state.maxResultCount, total: projects === undefined ? 0 : projects.totalCount, defaultCurrent: 1 }}
+    pagination={{ pageSize: this.state.maxResultCount, total: projects === undefined ? 0 : projects.totalCount, defaultCurrent: 1,
+      onChange: x => {
+      console.log(x);
+      this.setState({ skipCount: (x - 1) * this.state.maxResultCount! }, async () => await this.getAll());
+      
+    } }}
     dataSource={projects === undefined ? [] : projects.items}
-    footer={
-      <div>
-        <b>ant design</b> footer part
-      </div>
-    }
+
     renderItem={item  => (
       <List.Item
         key={item.name}
-        actions={[
-          "test", "test"
-        ]}
       >
         <List.Item.Meta
-          title={<a href={item.name}>{item.name}</a>}
-          description={item.startdate}
+          title={<a>{item.name}</a>}
+          description={ moment(item.startdate).format("MMMM Do, YYYY") + " to " + (moment(item.enddate).isAfter(moment("0001-01-01")) ? moment(item.enddate).format("MMMM Do, YYYY") : "Ongoing")}
         />
-        {item.cost}
+        <div className="totalCost textEnd">{"Total Cost: " + item.totalCost}</div>
+        <div className="textEnd">{"Base Cost: " + item.cost}</div>
+        <div>Team Members: {item.employees.map(x => x.name + ", ").length>0 ? item.employees.map(x => x.name + ", ") : "Nobody " }</div>
+        
       </List.Item>
     )}
   />
           </Card>
 
           </Col>
-          <Col span={8}>
-            <Card title="Browser Usage" className={'dashboardBox'} bordered={false}>
-              <PieChartExample />
-            </Card>
-          </Col>
+         
         </Row>
       </React.Fragment>
     );

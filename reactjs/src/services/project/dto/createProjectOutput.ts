@@ -3,5 +3,6 @@ export default interface CreateProjectOutput {
   startdate: Date;
   enddate: Date;
   cost: number;
+  totalCost1: number;
   id: number;
 }

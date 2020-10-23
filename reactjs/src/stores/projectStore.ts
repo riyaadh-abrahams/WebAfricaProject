@@ -26,6 +26,8 @@ class ProjectStore {
       startdate: new Date(),
       enddate: undefined,
       cost: 0,
+      totalCost: 0,
+      employees: [],
       id: 0,
     };
   }
