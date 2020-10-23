@@ -3,7 +3,7 @@
 This project management application is built using [aspnetboilerplate](https://aspnetboilerplate.com). The reason for this is that is has a good achitecture by default. It uses multiple layers on the back end, as well as a good React Architecture on the front end.
 
 ## Live Demo
-You can view the application [here](https://codeworks-web.web.app). The back end is hosted on Azure, and the front end is hosted on firebase hosting.
+You can view the application [here](https://codeworks-web.web.app). The back end is hosted on Azure, and the front end is hosted on firebase hosting. You can view the [swagger API](webafrica-project.azurewebsites.net) as well.
 
 ## Installation
 
@@ -15,7 +15,7 @@ git clone https://github.com/riyaadh-abrahams/WebAfricaProject
 ## Running the back-end
 - Open up the Asp .Net Core solution. 
 - Set the Startup Project to be `WebAfricaProject.Web.Host`
-- Set the connection string to a clean database.
+- Set the connection string to an empty database. This is set in `WebAfricaProject.Web.Host/appsettings.json`
 - In the package manager console, set `WebAfricaProject.EntityFrameworkCore` as the Default project
 - Enter `update-database` to run the migrations.
 - Start the server
@@ -35,10 +35,10 @@ The Console App is a repurpose of the Migrator App that comes with aspnetboilerp
 
 - Open up the Asp .Net Core solution. 
 - Set the Startup Project to be `WebAfricaProject.ConsoleApp`
-- Set the connection string to a clean database.
+- Set the connection string to an empty database. This should be set in `WebAfricaProject.ConsoleApp/appsettings.json`.
 - Run the App.
 
-The seed data will automatically be added to the database. 
+Warning. There is not much error checking in the console app.
 
 ## Cool Features
 - Custom Seed Data scripts.
